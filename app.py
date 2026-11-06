@@ -107,7 +107,9 @@ st.session_state["_pages"] = pages
 
 # The built-in menu is hidden; the quest checklist in the sidebar replaces it.
 nav = st.navigation(list(pages.values()), position="hidden")
-# Log the view before drawing the checklist so the current page is ticked at once.
+# Create the tables first (a fresh server has no app.db), then log the view
+# before drawing the checklist so the current page is ticked at once.
+ui.init_db_once()
 current = next(k for k, p in pages.items() if p.url_path == nav.url_path)
 if current != "admin":
     ui.log_view(current)

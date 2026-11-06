@@ -63,7 +63,7 @@ def style_chart(fig) -> None:
 
 
 @st.cache_resource
-def _init_db_once() -> bool:
+def init_db_once() -> bool:
     """Create the database tables once per server process."""
     db.init_db()
     return True
@@ -77,7 +77,7 @@ def get_dataset() -> Dataset:
 
 def setup() -> None:
     """Call at the top of every page render: DB, CSS, data banners."""
-    _init_db_once()
+    init_db_once()
     st.markdown(theme.css(is_dark()), unsafe_allow_html=True)
 
 
