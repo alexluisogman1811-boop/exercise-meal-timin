@@ -28,9 +28,10 @@ def home() -> None:
     """Purpose, how to use, disclaimer and consent."""
     ui.setup()
     ui.log_view("home")
-    st.title("🔮 ตำราเวทโภชนาการ")
+    st.title("🌌 ตำราเวทแห่งดวงดาว")
+    ui.spell("home")
     st.markdown("#### วางแผนมื้ออาหารตามเวลาออกกำลังกาย")
-    st.write("ยินดีต้อนรับสู่สำนักนักเวทสายฟิต! ตำราเล่มนี้จะแนะนำอาหารไทยที่เหมาะกับแต่ละช่วงเวลา "
+    st.write("ยินดีต้อนรับนักเวทสายฟิตสู่จักรวาลแห่งโภชนาการ! ตำราแห่งดวงดาวเล่มนี้จะแนะนำอาหารไทยที่เหมาะกับแต่ละช่วงเวลา "
              "ก่อน ระหว่าง และหลังออกกำลังกาย เตือนอาหารที่ควรเลี่ยง "
              "และคำนวณพลังงานกับสารอาหารที่ร่างกายต้องการ")
 
@@ -92,13 +93,13 @@ def home() -> None:
 
 
 pages = {
-    "home": st.Page(home, title="หน้าแรก", icon="🏰", default=True),
+    "home": st.Page(home, title="หน้าแรก", icon="🌌", default=True),
     "profile": st.Page("pages/1_Profile.py", title="ข้อมูลส่วนตัว", icon="🧙"),
     "needs": st.Page("pages/2_Needs_Summary.py", title="ความต้องการพลังงาน", icon="⚗️"),
-    "plan": st.Page("pages/3_Meal_Plan.py", title="แผนมื้ออาหารตามเวลา", icon="🕯️"),
-    "food": st.Page("pages/4_Food_Detail.py", title="ข้อมูลอาหาร", icon="📖"),
-    "log": st.Page("pages/5_Food_Log.py", title="บันทึกอาหาร", icon="🪶"),
-    "history": st.Page("pages/6_History_Report.py", title="ประวัติและรายงาน", icon="🗺️"),
+    "plan": st.Page("pages/3_Meal_Plan.py", title="แผนมื้ออาหารตามเวลา", icon="🌠"),
+    "food": st.Page("pages/4_Food_Detail.py", title="ข้อมูลอาหาร", icon="🪐"),
+    "log": st.Page("pages/5_Food_Log.py", title="บันทึกอาหาร", icon="✒️"),
+    "history": st.Page("pages/6_History_Report.py", title="ประวัติและรายงาน", icon="🔭"),
     "feedback": st.Page("pages/7_Feedback_SUS.py", title="แบบประเมิน", icon="🦉"),
     "admin": st.Page("pages/8_Admin.py", title="ผู้ดูแลระบบ", icon="🗝️"),
 }

@@ -9,7 +9,8 @@ ui.setup()
 user = ui.require_profile()
 uid = user["user_id"]
 ui.log_view("history")
-st.title("🗺️ ประวัติและรายงาน")
+st.title("🔭 ประวัติและรายงาน")
+ui.spell("history")
 
 summary = db.get_daily_summary(uid)
 if summary.empty:

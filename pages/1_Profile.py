@@ -10,6 +10,7 @@ ui.setup()
 uid = ui.require_consent()
 ui.log_view("profile")
 st.title("🧙 ข้อมูลส่วนตัว")
+ui.spell("profile")
 st.caption("ไม่ต้องใช้ชื่อจริง ข้อมูลใช้เพื่อคำนวณและการวิจัยเท่านั้น")
 
 user = ui.current_user() or {}

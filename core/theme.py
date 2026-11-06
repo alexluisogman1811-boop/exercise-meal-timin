@@ -1,5 +1,6 @@
-"""Fantasy "spellbook" look for the app: a parchment light mode and a
-starry-night dark mode. Pure strings and dicts, no Streamlit calls.
+"""Galaxy-magic look for the app: a pastel "cosmic dawn" light mode and a
+deep-space nebula dark mode with twinkling stars and a shooting star.
+Pure strings and dicts, no Streamlit calls.
 
 Colours are kept colour-blind safe (blue / gold / ember differ in lightness)
 and every coloured element also carries an icon or a text label.
@@ -12,40 +13,53 @@ FONTS_URL = (
 )
 
 PALETTES = {
-    "light": {  # aged parchment, ink and candle gold
-        "bg": "#f3e9d2", "surface": "#fbf5e6", "surface2": "#fffaf0",
-        "ink": "#2a1c0f", "muted": "#6b5639", "line": "#c9ad7a",
-        "gold": "#9a6b12", "accent": "#7b2d26", "accent_ink": "#fff6e0",
-        "avoid": "#b4400f", "avoid_bg": "#fbe3d3", "ok": "#1f5f8b", "ok_bg": "#e1edf6",
-        "sidebar": "linear-gradient(180deg,#5a2a20 0%,#3d1c16 100%)",
-        "sidebar_ink": "#f6e7c4",
-        "app_bg": ("radial-gradient(ellipse at top,#fdf6e3 0%,transparent 60%),"
-                   "radial-gradient(ellipse at bottom right,rgba(154,107,18,.18),transparent 55%),"
-                   "#f3e9d2"),
+    "light": {  # cosmic dawn: pastel nebula, indigo ink, star gold
+        "bg": "#f4f1ff", "surface": "rgba(255,255,255,.78)", "surface2": "#fbfaff",
+        "ink": "#1b1440", "muted": "#5b5384", "line": "#c9c0f0",
+        "gold": "#9a6a08", "accent": "#6d28d9", "accent_ink": "#ffffff",
+        "avoid": "#b4400f", "avoid_bg": "#fde7dc", "ok": "#1d5fa8", "ok_bg": "#e3eefc",
+        "sidebar": ("radial-gradient(1px 1px at 20% 30%,#fff 50%,transparent 51%),"
+                    "radial-gradient(1px 1px at 70% 60%,#fff 50%,transparent 51%),"
+                    "radial-gradient(1px 1px at 40% 85%,#ffe7a3 50%,transparent 51%),"
+                    "linear-gradient(180deg,#2e2178 0%,#16104a 100%)"),
+        "sidebar_ink": "#f1edff",
+        "stars": "rgba(60,40,140,.55)",
+        "app_bg": ("radial-gradient(ellipse 60% 45% at 15% 10%,rgba(196,181,253,.55),transparent 70%),"
+                   "radial-gradient(ellipse 50% 40% at 85% 25%,rgba(249,168,212,.45),transparent 70%),"
+                   "radial-gradient(ellipse 60% 45% at 60% 95%,rgba(125,211,252,.40),transparent 70%),"
+                   "#f4f1ff"),
     },
-    "dark": {  # night sky over a castle library
-        "bg": "#0f0d17", "surface": "#1d1a2b", "surface2": "#262238",
-        "ink": "#efe5cc", "muted": "#b7a785", "line": "#4a3f63",
-        "gold": "#e2b857", "accent": "#9b6bd3", "accent_ink": "#120f1c",
-        "avoid": "#ff9d6b", "avoid_bg": "#3a1d14", "ok": "#7cc4f5", "ok_bg": "#13283a",
-        "sidebar": "linear-gradient(180deg,#1b1630 0%,#0c0a14 100%)",
-        "sidebar_ink": "#efe5cc",
-        "app_bg": ("radial-gradient(1px 1px at 12% 18%,#fff 50%,transparent 51%),"
-                   "radial-gradient(1px 1px at 72% 9%,#fff 50%,transparent 51%),"
-                   "radial-gradient(1.5px 1.5px at 38% 62%,#ffe9a8 50%,transparent 51%),"
-                   "radial-gradient(1px 1px at 88% 44%,#fff 50%,transparent 51%),"
-                   "radial-gradient(1px 1px at 55% 85%,#fff 50%,transparent 51%),"
-                   "radial-gradient(1.5px 1.5px at 6% 78%,#cdb6ff 50%,transparent 51%),"
-                   "radial-gradient(ellipse at top,rgba(155,107,211,.25),transparent 60%),"
-                   "#0f0d17"),
+    "dark": {  # deep space: violet / magenta / cyan nebula clouds
+        "bg": "#070616", "surface": "rgba(22,18,52,.72)", "surface2": "#1c1842",
+        "ink": "#ece8ff", "muted": "#a9a3d1", "line": "#3f3680",
+        "gold": "#f5c96a", "accent": "#8b5cf6", "accent_ink": "#0b0820",
+        "avoid": "#ff9f7a", "avoid_bg": "#3b1724", "ok": "#67d4ff", "ok_bg": "#0f2a44",
+        "sidebar": ("radial-gradient(1px 1px at 20% 30%,#fff 50%,transparent 51%),"
+                    "radial-gradient(1px 1px at 70% 60%,#fff 50%,transparent 51%),"
+                    "radial-gradient(1.5px 1.5px at 40% 85%,#ffe7a3 50%,transparent 51%),"
+                    "linear-gradient(180deg,#140f36 0%,#05040f 100%)"),
+        "sidebar_ink": "#ece8ff",
+        "stars": "rgba(255,255,255,.9)",
+        "app_bg": ("radial-gradient(ellipse 55% 40% at 18% 15%,rgba(139,92,246,.40),transparent 70%),"
+                   "radial-gradient(ellipse 45% 35% at 85% 30%,rgba(236,72,153,.28),transparent 70%),"
+                   "radial-gradient(ellipse 60% 40% at 50% 100%,rgba(56,189,248,.22),transparent 70%),"
+                   "#070616"),
     },
 }
 
 # Chart series per mode: protein / carbohydrate / fat (or actual / target).
 SERIES = {
-    "light": ["#1f5f8b", "#b8860b", "#7b2d26"],
-    "dark": ["#7cc4f5", "#e2b857", "#e07a6a"],
+    "light": ["#1d5fa8", "#a0700d", "#be185d"],
+    "dark": ["#67d4ff", "#f5c96a", "#f472b6"],
 }
+
+# Star field drawn on a fixed layer above the background (twinkles via CSS).
+_STAR_LAYER = ",".join(
+    f"radial-gradient({s}px {s}px at {x}% {y}%,var(--stars) 50%,transparent 51%)"
+    for x, y, s in [(8, 12, 1), (23, 40, 1.5), (37, 8, 1), (52, 27, 1), (66, 14, 2), (81, 36, 1),
+                    (93, 9, 1.5), (14, 66, 1), (29, 83, 2), (45, 58, 1), (59, 76, 1.5), (73, 62, 1),
+                    (88, 81, 1), (96, 55, 2), (5, 92, 1.5), (41, 95, 1), (77, 94, 1.5), (61, 45, 1)]
+)
 
 _STATIC_CSS = """
 .stApp { background: var(--app-bg); background-attachment: fixed; color: var(--ink);
@@ -59,12 +73,34 @@ _STATIC_CSS = """
 .stApp [data-testid="stCaptionContainer"] { color: var(--muted); }
 .stApp h1, .stApp h2, .stApp h3 {
     font-family: 'Cinzel Decorative', 'Chonburi', serif; color: var(--gold);
-    letter-spacing: .02em; text-shadow: 0 1px 0 rgba(0,0,0,.15); }
-.stApp h1 { border-bottom: 2px solid var(--line); padding-bottom: .4rem; }
-.stApp h1::after { content: " ✦"; font-size: .6em; vertical-align: middle; }
+    letter-spacing: .02em; text-shadow: 0 0 12px rgba(245,201,106,.35); }
+.stApp h1 { border-bottom: 2px solid var(--line); padding-bottom: .4rem;
+            text-shadow: 0 0 18px rgba(245,201,106,.5), 0 0 40px rgba(139,92,246,.35); }
+.stApp h1::after { content: " ✧˖°"; font-size: .55em; vertical-align: middle; }
+
+/* Twinkling star field + a shooting star, drawn above the nebula, below the content */
+.stApp::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: var(--star-layer); animation: twinkle 5s ease-in-out infinite alternate; }
+.stApp::after { content: ""; position: fixed; top: 12%; left: -15%; width: 140px; height: 2px;
+    pointer-events: none; z-index: 0; border-radius: 2px; opacity: 0;
+    background: linear-gradient(90deg, transparent, var(--gold), #fff);
+    transform: rotate(18deg); animation: shooting 11s linear infinite 3s; }
+@keyframes twinkle { 0% { opacity: .35; } 50% { opacity: 1; } 100% { opacity: .55; } }
+@keyframes shooting { 0% { left: -15%; top: 8%; opacity: 0; } 3% { opacity: 1; }
+    12% { left: 110%; top: 38%; opacity: 0; } 100% { left: 110%; top: 38%; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .stApp::before, .stApp::after { animation: none; } }
+[data-testid="stMain"], [data-testid="stSidebar"] { position: relative; z-index: 1; }
+
+/* Spell incantation under each page title */
+.spell { font-family: 'Cinzel Decorative', serif; font-style: italic; font-size: 1.05rem;
+    color: var(--gold); margin: -.3rem 0 .8rem; letter-spacing: .06em;
+    animation: spell-glow 3s ease-in-out infinite; }
+.spell small { font-family: 'Trirong', serif; font-style: normal; color: var(--muted);
+    letter-spacing: 0; margin-left: .4rem; }
+@keyframes spell-glow { 50% { text-shadow: 0 0 10px rgba(245,201,106,.8), 0 0 22px rgba(139,92,246,.6); } }
 [data-testid="stMetricValue"] { color: var(--gold); font-family: 'Chonburi', serif; }
 
-/* Sidebar: leather-bound quest book */
+/* Sidebar: star chart of quests */
 [data-testid="stSidebar"] > div:first-child { background: var(--sidebar); }
 .stApp [data-testid="stSidebar"] p, .stApp [data-testid="stSidebar"] label,
 .stApp [data-testid="stSidebar"] span, .stApp [data-testid="stSidebar"] div,
@@ -73,18 +109,20 @@ _STATIC_CSS = """
     color: var(--sidebar-ink) !important; }
 [data-testid="stSidebar"] [data-testid="stCaptionContainer"] { opacity: .8; }
 .brand { font-family: 'Cinzel Decorative','Chonburi',serif; font-size: 1.25rem;
-         text-align: center; padding: .4rem 0 .6rem; border-bottom: 1px solid rgba(226,184,87,.5);
-         margin-bottom: .6rem; color: #e2b857 !important; }
+         text-align: center; padding: .4rem 0 .6rem; border-bottom: 1px solid rgba(245,201,106,.5);
+         margin-bottom: .6rem; color: #f5c96a !important; }
 .quest-title { font-family: 'Chonburi', serif; font-size: 1.05rem; margin: .6rem 0 .3rem;
-               color: #e2b857 !important; }
+               color: #f5c96a !important; }
 [data-testid="stSidebar"] [data-testid="stPageLink"] a {
-    border: 2px solid rgba(226,184,87,.55); border-left: 6px solid #e2b857;
+    border: 2px solid rgba(245,201,106,.55); border-left: 6px solid #f5c96a;
     border-radius: .6rem; padding: .55rem .7rem; margin: .28rem 0;
-    background: rgba(255,255,255,.06); min-height: 2.9rem; }
-[data-testid="stSidebar"] [data-testid="stPageLink"] a:hover { background: rgba(226,184,87,.18); }
+    background: rgba(255,255,255,.06); min-height: 2.9rem;
+    box-shadow: 0 0 10px rgba(139,92,246,.25); transition: box-shadow .2s, background .2s; }
+[data-testid="stSidebar"] [data-testid="stPageLink"] a:hover { background: rgba(245,201,106,.18);
+    box-shadow: 0 0 16px rgba(245,201,106,.55); }
 [data-testid="stSidebar"] [data-testid="stPageLink"] a[aria-current="page"],
 [data-testid="stSidebar"] [data-testid="stPageLink"] a[data-active="true"] {
-    background: rgba(226,184,87,.28); }
+    background: rgba(245,201,106,.28); }
 [data-testid="stSidebar"] [data-testid="stPageLink"] p { font-size: 1rem; font-weight: 600; }
 .quest-done p { text-decoration: line-through; opacity: .75; }
 
@@ -121,7 +159,7 @@ _STATIC_CSS = """
 .stApp [data-testid="stMain"] [data-testid="stLayoutWrapper"] > [data-testid="stVerticalBlock"],
 .stApp [data-testid="stExpander"] details {
     background: var(--surface); border: 1px solid var(--line) !important; border-radius: .9rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+    backdrop-filter: blur(6px); box-shadow: 0 4px 24px rgba(76,29,149,.18), inset 0 0 0 1px rgba(255,255,255,.04); }
 .stApp [data-testid="stExpander"] details summary:hover { color: var(--gold); }
 
 /* Alerts as scrolls with a coloured edge */
@@ -155,12 +193,12 @@ _STATIC_CSS = """
 /* Save confirmations: a big banner in the slot card and a large toast */
 .saved-banner { margin: .6rem 0; padding: .9rem 1.1rem; border-radius: .8rem;
     font-family: 'Chonburi', serif; font-size: 1.15rem; border: 3px solid var(--gold);
-    box-shadow: 0 0 0 4px rgba(226,184,87,.25), 0 6px 18px rgba(0,0,0,.2);
+    box-shadow: 0 0 0 4px rgba(245,201,106,.25), 0 6px 18px rgba(0,0,0,.2);
     animation: saved-pop .5s ease-out, saved-glow 1.6s ease-in-out 2; }
 .saved-ok { background: var(--ok_bg); color: var(--ok); border-color: var(--ok); }
 .saved-undo { background: var(--surface2); color: var(--ink); }
 @keyframes saved-pop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes saved-glow { 50% { box-shadow: 0 0 0 8px rgba(226,184,87,.45), 0 6px 18px rgba(0,0,0,.2); } }
+@keyframes saved-glow { 50% { box-shadow: 0 0 0 8px rgba(245,201,106,.45), 0 6px 18px rgba(0,0,0,.2); } }
 [data-testid="stToast"] { background: var(--accent) !important; border: 3px solid var(--gold) !important;
     border-radius: .9rem !important; box-shadow: 0 8px 28px rgba(0,0,0,.35) !important;
     min-width: 320px; padding: .9rem 1rem !important; }
@@ -182,7 +220,7 @@ def css(dark: bool) -> str:
     """Full <style> block for the chosen mode."""
     p = PALETTES["dark" if dark else "light"]
     names = {"app_bg": "app-bg", "accent_ink": "accent-ink", "sidebar_ink": "sidebar-ink"}
-    root = ";".join(f"--{names.get(k, k)}:{v}" for k, v in p.items())
+    root = ";".join(f"--{names.get(k, k)}:{v}" for k, v in p.items()) + f";--star-layer:{_STAR_LAYER}"
     return (f'<style>@import url("{FONTS_URL}");'
             f":root{{{root}}}{_STATIC_CSS}</style>")
 

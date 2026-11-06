@@ -12,7 +12,8 @@ uid = user["user_id"]
 ui.log_view("log")
 data = ui.get_dataset()
 ui.show_data_banners(data)
-st.title("🪶 บันทึกอาหาร")
+st.title("✒️ บันทึกอาหาร")
+ui.spell("log")
 
 foods = data.foods.set_index("food_id") if not data.foods.empty else None
 if foods is None:

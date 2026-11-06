@@ -17,7 +17,8 @@ ui.log_view("plan")
 data = ui.get_dataset()
 ui.show_data_banners(data)
 
-st.title("🕯️ แผนมื้ออาหารตามเวลา")
+st.title("🌠 แผนมื้ออาหารตามเวลา")
+ui.spell("plan")
 st.caption(f"ออกกำลังกาย {user['start_time']} น. นาน {user['duration_min']} นาที "
            f"({config.EXERCISE_TYPES_TH.get(user['exercise_type'], '')}) · เข้านอน {user['bedtime']} น.")
 
@@ -49,7 +50,7 @@ def toggle_saved(key: str, slot: str, rec: dict) -> None:
         db.add_food_log(uid, rec["food_id"], rec["qty"], f"{today}T{datetime.now():%H:%M:%S}",
                         slot, {k: rec[k] for k in ("kcal", "protein", "carb", "fat")})
         ui.log_action("plan", "add_log")
-        text, kind = f"✅ บันทึก “{rec['name_th']}” ลงบันทึกอาหารแล้ว ({rec['kcal']:.0f} kcal)", "ok"
+        text, kind = f"✅ Scriptum! บันทึก “{rec['name_th']}” ลงบันทึกอาหารแล้ว ({rec['kcal']:.0f} kcal)", "ok"
     else:
         for log_id in saved.get((slot, rec["food_id"]), []):
             db.delete_food_log(log_id, uid)

@@ -26,9 +26,30 @@ QUESTS = [
 ]
 
 
+# Original pseudo-Latin incantations shown under each page title, with the Thai meaning.
+SPELLS = {
+    "home": ("Stellara Aperio!", "เปิดประตูสู่ตำราแห่งดวงดาว"),
+    "profile": ("Corpus Mensura!", "ตรวจวัดพลังของนักเวท"),
+    "needs": ("Vigor Calcula!", "คำนวณพลังงานที่ร่างกายต้องการ"),
+    "plan": ("Horae Cibi Lumina!", "ส่องแสงนำทางมื้ออาหารตามเวลา"),
+    "food": ("Cibus Explorata!", "สำรวจคลังอาหารแห่งจักรวาล"),
+    "log": ("Scribo Cibum!", "จารึกอาหารที่กินลงตำรา"),
+    "history": ("Tempus Retrospecta!", "ย้อนดูเส้นทางดวงดาวของคุณ"),
+    "feedback": ("Vox Stellarum!", "ส่งเสียงของคุณถึงดวงดาว"),
+    "admin": ("Clavis Arcana!", "กุญแจลับของผู้ดูแล"),
+}
+
+
+def spell(page: str) -> None:
+    """Glowing incantation line under a page title."""
+    words, meaning = SPELLS[page]
+    st.markdown(f'<div class="spell">✨ {html.escape(words)}<small>— {html.escape(meaning)}</small></div>',
+                unsafe_allow_html=True)
+
+
 def is_dark() -> bool:
     """True when the night (dark) mode toggle is on."""
-    return bool(st.session_state.get("dark_mode", False))
+    return bool(st.session_state.get("dark_mode", True))
 
 
 def series_colors() -> list[str]:
@@ -74,11 +95,11 @@ def quest_status(user: dict | None) -> dict[str, bool]:
 def render_menu(pages: dict) -> None:
     """Sidebar: brand, day/night toggle and the quest checklist used as the menu."""
     with st.sidebar:
-        st.markdown('<div class="brand">🔮 ตำราเวทโภชนาการ</div>', unsafe_allow_html=True)
-        st.toggle("🌙 โหมดกลางคืน", key="dark_mode")
+        st.markdown('<div class="brand">🌌 ตำราเวทแห่งดวงดาว</div>', unsafe_allow_html=True)
+        st.toggle("🌌 โหมดห้วงอวกาศ", key="dark_mode", value=is_dark())
         done = quest_status(current_user())
         count = sum(done[key] for key, _ in QUESTS)
-        st.markdown('<div class="quest-title">📜 ภารกิจของนักเวท</div>', unsafe_allow_html=True)
+        st.markdown('<div class="quest-title">🪐 ภารกิจแห่งดวงดาว</div>', unsafe_allow_html=True)
         st.progress(count / len(QUESTS), text=f"สำเร็จแล้ว {count}/{len(QUESTS)} ภารกิจ")
         for i, (key, label) in enumerate(QUESTS, start=1):
             st.page_link(pages[key], label=f"{i}. {label}", icon="✅" if done[key] else "⬜")

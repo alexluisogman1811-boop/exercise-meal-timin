@@ -12,6 +12,7 @@ needs = ui.needs_for(user)
 e = config.ENERGY_PER_G
 
 st.title("⚗️ ความต้องการพลังงานและสารอาหาร")
+ui.spell("needs")
 st.caption(f"เป้าหมาย: {config.GOAL_LABELS_TH[user['goal']]} · "
            f"กิจกรรม: {config.ACTIVITY_LABELS_TH[user['activity_level']]}")
 
