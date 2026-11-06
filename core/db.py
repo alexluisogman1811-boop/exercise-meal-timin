@@ -218,6 +218,20 @@ def log_usage(user_id: str | None, page: str, action: str,
         )
 
 
+def user_progress(user_id: str, today: str, db_path: Path | str = config.DB_PATH) -> dict[str, bool]:
+    """Checklist progress: pages viewed, a food logged today, feedback sent."""
+    with connect(db_path) as conn:
+        viewed = {r[0] for r in conn.execute(
+            "SELECT DISTINCT page FROM usage_logs WHERE user_id = ? AND action = 'view'", (user_id,))}
+        logged = conn.execute(
+            "SELECT 1 FROM food_logs WHERE user_id = ? AND substr(eaten_at, 1, 10) = ? LIMIT 1",
+            (user_id, today)).fetchone() is not None
+        feedback = conn.execute(
+            "SELECT 1 FROM feedback WHERE user_id = ? LIMIT 1", (user_id,)).fetchone() is not None
+    return {"needs": "needs" in viewed, "plan": "plan" in viewed, "food": "food" in viewed,
+            "history": "history" in viewed, "log": logged, "feedback": feedback}
+
+
 def session_lengths(db_path: Path | str = config.DB_PATH) -> pd.DataFrame:
     """One row per usage session: user_id, start, end, minutes, events.
 

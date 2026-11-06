@@ -9,7 +9,7 @@ ui.setup()
 ui.log_view("food")
 data = ui.get_dataset()
 ui.show_data_banners(data)
-st.title("🔎 ข้อมูลอาหาร")
+st.title("📖 คลังข้อมูลอาหาร")
 
 foods = data.foods
 if foods.empty:
@@ -53,10 +53,10 @@ labels = {"kcal": "พลังงาน (kcal)", "protein": "โปรตีน
           "sodium_mg": "โซเดียม (มก.)"}
 table = pd.DataFrame({
     "สารอาหาร": list(labels.values()),
-    "ต่อ 100 ก.": [food[calc.NUTRIENT_COLUMNS[k]] for k in labels],
-    "ต่อ 1 หน่วยบริโภค": [round(serving[k], 1) for k in labels],
+    "ต่อ 100 ก.": [f"{food[calc.NUTRIENT_COLUMNS[k]]:g}" for k in labels],
+    "ต่อ 1 หน่วยบริโภค": [f"{serving[k]:.1f}" for k in labels],
 })
-st.dataframe(table, hide_index=True, use_container_width=True)
+st.table(table.set_index("สารอาหาร"))
 
 L = config.LEVEL_LABELS_TH
 st.write(f"ไขมัน: **{L[food['fat_level']]}** · ใยอาหาร: **{L[food['fiber_level']]}** · "
@@ -79,7 +79,7 @@ for slot in config.SLOTS:
         "สถานะ": "⚠ ควรเลี่ยง" if warnings else "✓ กินได้",
         "เหตุผล / กฎ": " | ".join(f"[{w['rule_id']}] {w['reason']}" for w in warnings) or "-",
     })
-st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+st.table(pd.DataFrame(rows).set_index("ช่วงเวลา"))
 if not user:
     st.caption("ยังไม่ได้ตรวจการแพ้อาหาร เพราะยังไม่ได้กรอกข้อมูลส่วนตัว")
 ui.footer()

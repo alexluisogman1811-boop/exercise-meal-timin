@@ -11,7 +11,7 @@ ui.log_view("needs")
 needs = ui.needs_for(user)
 e = config.ENERGY_PER_G
 
-st.title("⚡ ความต้องการพลังงานและสารอาหาร")
+st.title("⚗️ ความต้องการพลังงานและสารอาหาร")
 st.caption(f"เป้าหมาย: {config.GOAL_LABELS_TH[user['goal']]} · "
            f"กิจกรรม: {config.ACTIVITY_LABELS_TH[user['activity_level']]}")
 
@@ -35,13 +35,14 @@ energy = {
 }
 fig = go.Figure(go.Pie(
     labels=list(energy), values=list(energy.values()), hole=0.55, sort=False,
-    marker=dict(colors=[ui.COLORS["blue"], ui.COLORS["orange"], ui.COLORS["vermillion"]],
+    marker=dict(colors=ui.series_colors(),
                 line=dict(color="white", width=2)),
     textinfo="label+percent", insidetextorientation="horizontal", hovertemplate="%{label}: %{value:.0f} kcal<extra></extra>"))
 fig.update_layout(title="สัดส่วนพลังงานจากสารอาหารหลัก", showlegend=False,
                   margin=dict(l=10, r=10, t=50, b=10), height=340,
                   annotations=[dict(text=f"{needs['target_kcal']:,.0f}<br>kcal", showarrow=False,
                                     font_size=18)])
+ui.style_chart(fig)
 st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("ตัวเลขเหล่านี้หมายความว่าอะไร")

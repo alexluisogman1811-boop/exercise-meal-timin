@@ -9,7 +9,7 @@ from core import calc, db, ui
 ui.setup()
 uid = ui.require_consent()
 ui.log_view("profile")
-st.title("👤 ข้อมูลส่วนตัว")
+st.title("🧙 ข้อมูลส่วนตัว")
 st.caption("ไม่ต้องใช้ชื่อจริง ข้อมูลใช้เพื่อคำนวณและการวิจัยเท่านั้น")
 
 user = ui.current_user() or {}

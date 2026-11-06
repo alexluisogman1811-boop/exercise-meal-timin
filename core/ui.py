@@ -5,30 +5,40 @@ Kept separate from calc/rules so those stay pure and testable.
 from __future__ import annotations
 
 import html
+from datetime import date
 
 import streamlit as st
 
 import config
-from core import calc, db
+from core import calc, db, theme
 from core.data_loader import Dataset, load_dataset
 
-# Okabe-Ito colour-blind safe palette; colours are always paired with icons/text.
-COLORS = {"blue": "#0072B2", "orange": "#E69F00", "vermillion": "#D55E00",
-          "green": "#009E73", "grey": "#6B7280"}
+# The sidebar menu is a quest checklist: (page key, Thai label) in suggested order.
+QUESTS = [
+    ("home", "ยินยอมเข้าร่วม"),
+    ("profile", "กรอกข้อมูลส่วนตัว"),
+    ("needs", "ดูพลังงานที่ต้องการ"),
+    ("plan", "ดูแผนมื้ออาหารตามเวลา"),
+    ("food", "สำรวจคลังอาหาร"),
+    ("log", "บันทึกอาหารวันนี้"),
+    ("history", "ดูรายงานย้อนหลัง"),
+    ("feedback", "ทำแบบประเมิน"),
+]
 
-CSS = """
-<style>
-.stButton > button, .stDownloadButton > button, .stFormSubmitButton > button {
-    min-height: 3rem; font-size: 1.05rem; width: 100%;
-}
-.chip { display:inline-block; padding:0.2rem 0.6rem; margin:0.15rem; border-radius:1rem;
-        font-size:0.9rem; border:2px solid; }
-.chip-avoid { border-color:#D55E00; color:#A63D00; background:#FDEBE1; }
-.chip-ok { border-color:#0072B2; color:#00507D; background:#E3F0F9; }
-.footer { font-size:0.8rem; color:#6B7280; border-top:1px solid #E5E7EB;
-          margin-top:2rem; padding-top:0.6rem; }
-</style>
-"""
+
+def is_dark() -> bool:
+    """True when the night (dark) mode toggle is on."""
+    return bool(st.session_state.get("dark_mode", False))
+
+
+def series_colors() -> list[str]:
+    """Three chart colours for the current mode."""
+    return theme.SERIES["dark" if is_dark() else "light"]
+
+
+def style_chart(fig) -> None:
+    """Apply the current mode's fonts and colours to a Plotly figure."""
+    fig.update_layout(**theme.chart_layout(is_dark()))
 
 
 @st.cache_resource
@@ -47,7 +57,36 @@ def get_dataset() -> Dataset:
 def setup() -> None:
     """Call at the top of every page render: DB, CSS, data banners."""
     _init_db_once()
-    st.markdown(CSS, unsafe_allow_html=True)
+    st.markdown(theme.css(is_dark()), unsafe_allow_html=True)
+
+
+def quest_status(user: dict | None) -> dict[str, bool]:
+    """Which checklist steps the current user has completed."""
+    uid = user_id()
+    if not uid:
+        return {key: False for key, _ in QUESTS}
+    progress = db.user_progress(uid, date.today().isoformat())
+    progress["home"] = True
+    progress["profile"] = has_profile(user)
+    return progress
+
+
+def render_menu(pages: dict) -> None:
+    """Sidebar: brand, day/night toggle and the quest checklist used as the menu."""
+    with st.sidebar:
+        st.markdown('<div class="brand">🔮 ตำราเวทโภชนาการ</div>', unsafe_allow_html=True)
+        st.toggle("🌙 โหมดกลางคืน", key="dark_mode")
+        done = quest_status(current_user())
+        count = sum(done[key] for key, _ in QUESTS)
+        st.markdown('<div class="quest-title">📜 ภารกิจของนักเวท</div>', unsafe_allow_html=True)
+        st.progress(count / len(QUESTS), text=f"สำเร็จแล้ว {count}/{len(QUESTS)} ภารกิจ")
+        for i, (key, label) in enumerate(QUESTS, start=1):
+            st.page_link(pages[key], label=f"{i}. {label}", icon="✅" if done[key] else "⬜")
+        st.divider()
+        st.page_link(pages["admin"], label="ห้องผู้ดูแล", icon="🗝️")
+        if user_id():
+            st.caption(f"รหัสผู้ใช้: {user_id()}")
+        st.caption("⚕️ ไม่ใช่เครื่องมือวินิจฉัยหรือรักษาโรค")
 
 
 def show_data_banners(dataset: Dataset) -> None:

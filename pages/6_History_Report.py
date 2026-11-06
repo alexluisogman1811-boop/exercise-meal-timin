@@ -9,7 +9,7 @@ ui.setup()
 user = ui.require_profile()
 uid = user["user_id"]
 ui.log_view("history")
-st.title("📈 ประวัติและรายงาน")
+st.title("🗺️ ประวัติและรายงาน")
 
 summary = db.get_daily_summary(uid)
 if summary.empty:
@@ -40,12 +40,13 @@ def bar_vs_target(col: str, goal_col: str, title: str, unit: str) -> go.Figure:
     """Bar of intake with a dashed target line."""
     x = data["date"].dt.strftime("%d/%m/%Y")  # category axis: one bar per day/week
     fig = go.Figure()
-    fig.add_bar(x=x, y=data[col], name="ที่กินจริง", marker_color=ui.COLORS["blue"])
+    fig.add_bar(x=x, y=data[col], name="ที่กินจริง", marker_color=ui.series_colors()[0])
     fig.add_scatter(x=x, y=data[goal_col], name="เป้าหมาย", mode="lines+markers",
-                    line=dict(color=ui.COLORS["orange"], dash="dash", width=3))
+                    line=dict(color=ui.series_colors()[1], dash="dash", width=3))
     fig.update_xaxes(type="category")
     fig.update_layout(title=title, yaxis_title=unit, xaxis_title=x_title, height=320,
                       margin=dict(l=10, r=10, t=50, b=10), legend=dict(orientation="h", y=-0.3))
+    ui.style_chart(fig)
     return fig
 
 

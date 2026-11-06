@@ -6,7 +6,7 @@ from core import calc, db, ui
 ui.setup()
 uid = ui.require_consent()
 ui.log_view("feedback")
-st.title("💬 แบบประเมินการใช้งาน")
+st.title("🦉 แบบประเมินการใช้งาน")
 st.caption("1 = ไม่เห็นด้วยอย่างยิ่ง · 5 = เห็นด้วยอย่างยิ่ง")
 
 # Standard SUS items (Brooke 1996), Thai wording. Odd = positive, even = negative.

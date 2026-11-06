@@ -13,7 +13,7 @@ import config
 from core import db, ui
 
 ui.setup()
-st.title("🔒 ผู้ดูแลระบบ")
+st.title("🗝️ ผู้ดูแลระบบ")
 
 
 def admin_password() -> str | None:

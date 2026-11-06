@@ -114,3 +114,25 @@ def test_db_roundtrip(tmp_path):
     db.delete_user_data("abc12345", path)
     assert db.get_user("abc12345", path) is None
     assert db.get_food_logs("abc12345", db_path=path).empty
+
+
+def test_user_progress_checklist(tmp_path):
+    path = tmp_path / "p.db"
+    db.init_db(path)
+    db.create_user("u1", False, path)
+    assert not any(db.user_progress("u1", "2026-11-06", path).values())
+    db.log_usage("u1", "plan", "view", path)
+    db.add_food_log("u1", "D01", 1, "2026-11-06T08:00:00", "pre_3h",
+                    {"kcal": 195, "protein": 4, "carb": 42, "fat": 0.5}, path)
+    progress = db.user_progress("u1", "2026-11-06", path)
+    assert progress["plan"] and progress["log"]
+    assert not progress["feedback"] and not progress["needs"]
+    assert not db.user_progress("u1", "2026-11-07", path)["log"]   # food log is per day
+
+
+def test_theme_css_both_modes():
+    from core import theme
+    for dark in (False, True):
+        css = theme.css(dark)
+        assert css.startswith("<style>") and "--gold" in css and "{{" not in css
+    assert theme.PALETTES["light"].keys() == theme.PALETTES["dark"].keys()

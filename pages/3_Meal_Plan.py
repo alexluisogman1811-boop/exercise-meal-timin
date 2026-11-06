@@ -12,7 +12,7 @@ ui.log_view("plan")
 data = ui.get_dataset()
 ui.show_data_banners(data)
 
-st.title("🕒 แผนมื้ออาหารตามเวลา")
+st.title("🕯️ แผนมื้ออาหารตามเวลา")
 st.caption(f"ออกกำลังกาย {user['start_time']} น. นาน {user['duration_min']} นาที "
            f"({config.EXERCISE_TYPES_TH.get(user['exercise_type'], '')}) · เข้านอน {user['bedtime']} น.")
 
@@ -58,7 +58,7 @@ for slot, window in times.items():
         elif len(recs) < config.RECOMMEND_MIN:
             st.caption("มีอาหารที่เหมาะน้อยกว่า 3 รายการ ควรเพิ่มรายการอาหารในฐานข้อมูล")
         for r in recs:
-            with st.expander(f"✅ {r['name_th']} · {r['qty']:g} × {r['serving_desc']} · "
+            with st.expander(f"✨ {r['name_th']} · {r['qty']:g} × {r['serving_desc']} · "
                              f"{r['kcal']:.0f} kcal · โปรตีน {r['protein']:.0f} ก."):
                 st.write("**ทำไมจึงแนะนำ:** " + " · ".join(r["reasons"]))
                 if r["benefit"]:
