@@ -143,6 +143,31 @@ _STATIC_CSS = """
 .stApp table th { background: var(--surface2); color: var(--gold); }
 .stApp table td, .stApp table th { border-color: var(--line) !important; }
 
+/* Menu tick boxes on the meal plan: chunky to-do rows */
+.stApp [data-testid="stMain"] [data-testid="stCheckbox"] label {
+    width: 100%; padding: .55rem .7rem; margin-top: .35rem; border-radius: .7rem;
+    border: 2px solid var(--line); border-left: 6px solid var(--gold); background: var(--surface2); }
+.stApp [data-testid="stMain"] [data-testid="stCheckbox"]:has(input:checked) label {
+    background: var(--ok_bg); border-color: var(--ok); }
+.stApp [data-testid="stMain"] [data-testid="stCheckbox"]:has(input:checked) p {
+    text-decoration: line-through; text-decoration-color: var(--gold); }
+
+/* Save confirmations: a big banner in the slot card and a large toast */
+.saved-banner { margin: .6rem 0; padding: .9rem 1.1rem; border-radius: .8rem;
+    font-family: 'Chonburi', serif; font-size: 1.15rem; border: 3px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(226,184,87,.25), 0 6px 18px rgba(0,0,0,.2);
+    animation: saved-pop .5s ease-out, saved-glow 1.6s ease-in-out 2; }
+.saved-ok { background: var(--ok_bg); color: var(--ok); border-color: var(--ok); }
+.saved-undo { background: var(--surface2); color: var(--ink); }
+@keyframes saved-pop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes saved-glow { 50% { box-shadow: 0 0 0 8px rgba(226,184,87,.45), 0 6px 18px rgba(0,0,0,.2); } }
+[data-testid="stToast"] { background: var(--accent) !important; border: 3px solid var(--gold) !important;
+    border-radius: .9rem !important; box-shadow: 0 8px 28px rgba(0,0,0,.35) !important;
+    min-width: 320px; padding: .9rem 1rem !important; }
+[data-testid="stToast"] p, [data-testid="stToast"] [data-testid="stMarkdownContainer"] {
+    color: var(--accent-ink) !important; font-size: 1.15rem !important;
+    font-family: 'Chonburi', serif !important; }
+
 hr { border-color: var(--line) !important; }
 .chip { display:inline-block; padding:.2rem .65rem; margin:.15rem; border-radius:1rem;
         font-size:.9rem; border:2px solid; }

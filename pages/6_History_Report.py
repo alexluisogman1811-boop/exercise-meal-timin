@@ -50,8 +50,8 @@ def bar_vs_target(col: str, goal_col: str, title: str, unit: str) -> go.Figure:
     return fig
 
 
-st.plotly_chart(bar_vs_target("kcal_total", "goal_kcal", "พลังงาน", "kcal"), use_container_width=True)
-st.plotly_chart(bar_vs_target("protein_total", "goal_protein", "โปรตีน", "กรัม"), use_container_width=True)
+st.plotly_chart(bar_vs_target("kcal_total", "goal_kcal", "พลังงาน", "kcal"), width="stretch")
+st.plotly_chart(bar_vs_target("protein_total", "goal_protein", "โปรตีน", "กรัม"), width="stretch")
 
 summary["kcal_adherence"] = [calc.kcal_adherence_pct(a, t) for a, t in zip(summary["kcal_total"], summary["goal_kcal"])]
 summary["protein_adherence"] = [calc.protein_adherence_pct(a, t) for a, t in zip(summary["protein_total"], summary["goal_protein"])]

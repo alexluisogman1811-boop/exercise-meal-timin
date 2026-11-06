@@ -43,7 +43,7 @@ fig.update_layout(title="สัดส่วนพลังงานจากส�
                   annotations=[dict(text=f"{needs['target_kcal']:,.0f}<br>kcal", showarrow=False,
                                     font_size=18)])
 ui.style_chart(fig)
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 st.subheader("ตัวเลขเหล่านี้หมายความว่าอะไร")
 carb_low, carb_high = config.CARB_G_PER_KG_RANGE
