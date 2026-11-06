@@ -1,0 +1,8 @@
+app.db
+.streamlit/secrets.toml
+.env
+__pycache__/
+.pytest_cache/
+.venv/
+.claude/
+*.db
