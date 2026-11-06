@@ -9,7 +9,7 @@ ui.setup()
 ui.log_view("food")
 data = ui.get_dataset()
 ui.show_data_banners(data)
-st.title("🪐 คลังข้อมูลอาหาร")
+st.title("📼 คลังข้อมูลอาหาร")
 ui.spell("food")
 
 foods = data.foods

@@ -26,24 +26,24 @@ QUESTS = [
 ]
 
 
-# Original pseudo-Latin incantations shown under each page title, with the Thai meaning.
+# Original rock-style taglines shown under each page title, with the Thai meaning.
 SPELLS = {
-    "home": ("Stellara Aperio!", "เปิดประตูสู่ตำราแห่งดวงดาว"),
-    "profile": ("Corpus Mensura!", "ตรวจวัดพลังของนักเวท"),
-    "needs": ("Vigor Calcula!", "คำนวณพลังงานที่ร่างกายต้องการ"),
-    "plan": ("Horae Cibi Lumina!", "ส่องแสงนำทางมื้ออาหารตามเวลา"),
-    "food": ("Cibus Explorata!", "สำรวจคลังอาหารแห่งจักรวาล"),
-    "log": ("Scribo Cibum!", "จารึกอาหารที่กินลงตำรา"),
-    "history": ("Tempus Retrospecta!", "ย้อนดูเส้นทางดวงดาวของคุณ"),
-    "feedback": ("Vox Stellarum!", "ส่งเสียงของคุณถึงดวงดาว"),
-    "admin": ("Clavis Arcana!", "กุญแจลับของผู้ดูแล"),
+    "home": ("Rise from the static.", "ลุกขึ้นมา เริ่มต้นใหม่ไปด้วยกัน"),
+    "profile": ("Know your own pulse.", "รู้จักร่างกายของตัวเอง"),
+    "needs": ("Fuel the fire within.", "เติมพลังให้ไฟในตัวคุณ"),
+    "plan": ("Every hour has its anthem.", "ทุกช่วงเวลามีมื้อที่ใช่"),
+    "food": ("Choose your armor.", "เลือกอาหารเป็นเกราะของคุณ"),
+    "log": ("Write it in ink.", "จดทุกมื้อให้ชัดเจน"),
+    "history": ("Look back, march forward.", "มองย้อนกลับ แล้วเดินหน้าต่อ"),
+    "feedback": ("Let your voice be loud.", "บอกเราให้ดังที่สุด"),
+    "admin": ("Behind the curtain.", "หลังเวทีของผู้ดูแล"),
 }
 
 
 def spell(page: str) -> None:
-    """Glowing incantation line under a page title."""
+    """Typewriter tagline under a page title."""
     words, meaning = SPELLS[page]
-    st.markdown(f'<div class="spell">✨ {html.escape(words)}<small>— {html.escape(meaning)}</small></div>',
+    st.markdown(f'<div class="spell">🎸 {html.escape(words)}<small>— {html.escape(meaning)}</small></div>',
                 unsafe_allow_html=True)
 
 
@@ -95,11 +95,11 @@ def quest_status(user: dict | None) -> dict[str, bool]:
 def render_menu(pages: dict) -> None:
     """Sidebar: brand, day/night toggle and the quest checklist used as the menu."""
     with st.sidebar:
-        st.markdown('<div class="brand">🌌 ตำราเวทแห่งดวงดาว</div>', unsafe_allow_html=True)
-        st.toggle("🌌 โหมดห้วงอวกาศ", key="dark_mode", value=is_dark())
+        st.markdown('<div class="brand">🥀 บันทึกพลังสายร็อก</div>', unsafe_allow_html=True)
+        st.toggle("🖤 โหมดเวทีมืด", key="dark_mode", value=is_dark())
         done = quest_status(current_user())
         count = sum(done[key] for key, _ in QUESTS)
-        st.markdown('<div class="quest-title">🪐 ภารกิจแห่งดวงดาว</div>', unsafe_allow_html=True)
+        st.markdown('<div class="quest-title">🎸 เซ็ตลิสต์ภารกิจ</div>', unsafe_allow_html=True)
         st.progress(count / len(QUESTS), text=f"สำเร็จแล้ว {count}/{len(QUESTS)} ภารกิจ")
         for i, (key, label) in enumerate(QUESTS, start=1):
             st.page_link(pages[key], label=f"{i}. {label}", icon="✅" if done[key] else "⬜")

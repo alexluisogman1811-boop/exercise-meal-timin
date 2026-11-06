@@ -6,7 +6,7 @@ from core import calc, db, ui
 ui.setup()
 uid = ui.require_consent()
 ui.log_view("feedback")
-st.title("🦉 แบบประเมินการใช้งาน")
+st.title("🎤 แบบประเมินการใช้งาน")
 ui.spell("feedback")
 st.caption("1 = ไม่เห็นด้วยอย่างยิ่ง · 5 = เห็นด้วยอย่างยิ่ง")
 

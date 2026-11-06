@@ -28,15 +28,15 @@ def home() -> None:
     """Purpose, how to use, disclaimer and consent."""
     ui.setup()
     ui.log_view("home")
-    st.title("🌌 ตำราเวทแห่งดวงดาว")
+    st.title("🥀 บันทึกพลังสายร็อก")
     ui.spell("home")
     st.markdown("#### วางแผนมื้ออาหารตามเวลาออกกำลังกาย")
-    st.write("ยินดีต้อนรับนักเวทสายฟิตสู่จักรวาลแห่งโภชนาการ! ตำราแห่งดวงดาวเล่มนี้จะแนะนำอาหารไทยที่เหมาะกับแต่ละช่วงเวลา "
+    st.write("ยินดีต้อนรับสาวกสายร็อกที่รักการออกกำลังกาย! บันทึกเล่มนี้จะแนะนำอาหารไทยที่เหมาะกับแต่ละช่วงเวลา "
              "ก่อน ระหว่าง และหลังออกกำลังกาย เตือนอาหารที่ควรเลี่ยง "
              "และคำนวณพลังงานกับสารอาหารที่ร่างกายต้องการ")
 
     with st.container(border=True):
-        st.subheader("📜 วิธีใช้ตำรา")
+        st.subheader("📼 วิธีใช้งาน")
         st.markdown(
             "1. อ่านข้อตกลงและกดยินยอม\n"
             "2. กรอก **ข้อมูลส่วนตัว** (ใช้ชื่อเล่น ไม่ต้องใช้ชื่อจริง)\n"
@@ -93,14 +93,14 @@ def home() -> None:
 
 
 pages = {
-    "home": st.Page(home, title="หน้าแรก", icon="🌌", default=True),
-    "profile": st.Page("pages/1_Profile.py", title="ข้อมูลส่วนตัว", icon="🧙"),
-    "needs": st.Page("pages/2_Needs_Summary.py", title="ความต้องการพลังงาน", icon="⚗️"),
-    "plan": st.Page("pages/3_Meal_Plan.py", title="แผนมื้ออาหารตามเวลา", icon="🌠"),
-    "food": st.Page("pages/4_Food_Detail.py", title="ข้อมูลอาหาร", icon="🪐"),
+    "home": st.Page(home, title="หน้าแรก", icon="🥀", default=True),
+    "profile": st.Page("pages/1_Profile.py", title="ข้อมูลส่วนตัว", icon="🎭"),
+    "needs": st.Page("pages/2_Needs_Summary.py", title="ความต้องการพลังงาน", icon="⚡"),
+    "plan": st.Page("pages/3_Meal_Plan.py", title="แผนมื้ออาหารตามเวลา", icon="🕯️"),
+    "food": st.Page("pages/4_Food_Detail.py", title="ข้อมูลอาหาร", icon="📼"),
     "log": st.Page("pages/5_Food_Log.py", title="บันทึกอาหาร", icon="✒️"),
-    "history": st.Page("pages/6_History_Report.py", title="ประวัติและรายงาน", icon="🔭"),
-    "feedback": st.Page("pages/7_Feedback_SUS.py", title="แบบประเมิน", icon="🦉"),
+    "history": st.Page("pages/6_History_Report.py", title="ประวัติและรายงาน", icon="🎞️"),
+    "feedback": st.Page("pages/7_Feedback_SUS.py", title="แบบประเมิน", icon="🎤"),
     "admin": st.Page("pages/8_Admin.py", title="ผู้ดูแลระบบ", icon="🗝️"),
 }
 st.session_state["_pages"] = pages
