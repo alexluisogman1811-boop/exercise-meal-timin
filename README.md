@@ -141,3 +141,13 @@ This software is educational and is not medical advice.
 
 Issues and pull requests are welcome. Please run `python -m pytest` before sending changes,
 and put every new number or assumption in `config.py` with its source.
+
+## Share a public link without any account / แชร์ลิงก์ให้เพื่อนใช้ (ไม่ต้องสมัครบัญชี)
+
+Double-click `share.bat`. It starts the app and a free Cloudflare quick tunnel, then prints a link like
+`https://random-words.trycloudflare.com` — send that link to friends.
+The link works only while the window is open and your computer is on, and it changes every time.
+Data stays in `app.db` on your computer.
+
+ดับเบิลคลิก `share.bat` แล้วคัดลอกลิงก์ `https://....trycloudflare.com` ส่งให้เพื่อน
+ลิงก์ใช้ได้เฉพาะตอนที่หน้าต่างเปิดอยู่และคอมพิวเตอร์เปิดอยู่ และจะเปลี่ยนทุกครั้งที่เริ่มใหม่
