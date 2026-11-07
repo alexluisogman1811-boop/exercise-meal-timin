@@ -21,6 +21,8 @@ FOOD_COLUMNS = [
     "kcal_100g", "protein_100g", "carb_100g", "fat_100g", "fiber_100g", "sugar_100g",
     "sodium_mg_100g", "easy_digest", "tags", "source", "source_date",
 ]
+# Kept when present: USDA link and the teacher's review evidence (proposal 6.8).
+FOOD_OPTIONAL_COLUMNS = ["fdc_id", "reviewer", "review_date"]
 # Allowed range for each numeric column (per 100 g unless stated).
 NUMERIC_RANGES = {
     "serving_g": (0.1, 2000), "kcal_100g": (0, 900), "protein_100g": (0, 100),
@@ -29,7 +31,7 @@ NUMERIC_RANGES = {
 }
 RULE_COLUMNS = ["rule_id", "group", "examples", "avoid_when", "slots", "reason",
                 "condition", "reference", "reviewer"]
-RULE_OPTIONAL_COLUMNS = ["condition_expr", "except_expr", "severity"]
+RULE_OPTIONAL_COLUMNS = ["condition_expr", "except_expr", "severity", "review_date"]
 BENEFIT_COLUMNS = ["food_id", "benefit_text", "key_nutrient"]
 
 TRUE_WORDS = {"1", "y", "yes", "true", "ใช่", "ง่าย", "ย่อยง่าย", "✓"}
@@ -107,6 +109,8 @@ def prepare_foods(raw: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
         return pd.DataFrame(columns=FOOD_COLUMNS), [f"foods.csv ขาดคอลัมน์: {', '.join(missing)}"]
 
     df = raw[FOOD_COLUMNS].copy()
+    for col in FOOD_OPTIONAL_COLUMNS:
+        df[col] = raw[col].fillna("").str.strip() if col in raw.columns else ""
     df["food_id"] = df["food_id"].str.strip()
     df = df[(df["food_id"] != "") & (df["food_id"] != "ตัวอย่าง")]
 
@@ -223,6 +227,23 @@ def prepare_benefits(raw: pd.DataFrame | None) -> tuple[dict[str, dict], list[st
     if missing:
         return {}, [f"food_benefits.csv ขาดคอลัมน์: {', '.join(missing)}"]
     return {str(r["food_id"]).strip(): r for r in raw.to_dict("records")}, []
+
+
+def review_status(dataset: Dataset) -> pd.DataFrame:
+    """Teacher-review evidence for every food and rule (proposal 6.8).
+
+    An item counts as reviewed when it has a reviewer name and a review_date.
+    """
+    rows = [{"ประเภท": "อาหาร", "รหัส": f["food_id"], "ชื่อ": f["name_th"],
+             "ผู้ตรวจ": f.get("reviewer", ""), "วันที่ตรวจ": f.get("review_date", "")}
+            for f in dataset.foods.to_dict("records")]
+    rows += [{"ประเภท": "กฎ", "รหัส": r["rule_id"], "ชื่อ": r.get("group", ""),
+              "ผู้ตรวจ": r.get("reviewer", ""), "วันที่ตรวจ": r.get("review_date", "")}
+             for r in dataset.rules]
+    df = pd.DataFrame(rows, columns=["ประเภท", "รหัส", "ชื่อ", "ผู้ตรวจ", "วันที่ตรวจ"])
+    pending = df["ผู้ตรวจ"].str.startswith("รอ") | (df["ผู้ตรวจ"].str.strip() == "")
+    df["ตรวจแล้ว"] = ~pending & (df["วันที่ตรวจ"].str.strip() != "")
+    return df
 
 
 def load_dataset(data_dir: Path = config.DATA_DIR) -> Dataset:

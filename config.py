@@ -125,6 +125,12 @@ LEVEL_THRESHOLDS = {
 LIQUID_STATE_WORDS = ["เหลว", "เครื่องดื่ม", "liquid", "drink"]
 LEVEL_LABELS_TH = {"low": "ต่ำ", "medium": "ปานกลาง", "high": "สูง"}
 
+# Spot-check against INMUCAL (proposal 6.8): a nutrient "matches" when the app
+# value is within this relative difference of the INMUCAL value. Assumption -
+# USDA and Thai tables differ in varieties and recipes, so 10 % is allowed.
+INMUCAL_TOLERANCE = 0.10
+INMUCAL_SAMPLE_SEED = 2026
+
 # Rows whose |4P + 4C + 9F - kcal| / kcal is above this are flagged
 # "needs source check" (alcohol, polyols and rounding cause real gaps).
 KCAL_CHECK_TOLERANCE = 0.15

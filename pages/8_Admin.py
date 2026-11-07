@@ -11,6 +11,7 @@ import streamlit as st
 
 import config
 from core import db, ui
+from core.data_loader import review_status
 
 ui.setup()
 st.title("🗝️ ผู้ดูแลระบบ")
@@ -47,7 +48,21 @@ if st.button("🔄 โหลดไฟล์ข้อมูลใหม่ (ห�
     ui.get_dataset.clear()
     st.rerun()
 
-tab_data, tab_rules, tab_usage, tab_export = st.tabs(["ข้อมูลอาหาร", "กฎ", "การใช้งาน", "ส่งออกข้อมูล"])
+tab_data, tab_rules, tab_review, tab_usage, tab_export = st.tabs(
+    ["ข้อมูลอาหาร", "กฎ", "การตรวจรับรอง", "การใช้งาน", "ส่งออกข้อมูล"])
+
+with tab_review:
+    review = review_status(data)
+    done = int(review["ตรวจแล้ว"].sum())
+    st.metric("ครูตรวจรับรองแล้ว", f"{done} / {len(review)} รายการ")
+    st.progress(done / len(review) if len(review) else 0.0)
+    st.caption("วิธีบันทึกผลตรวจ: ให้ครูกรอกชื่อในคอลัมน์ reviewer และวันที่ตรวจ (YYYY-MM-DD) ในคอลัมน์ "
+               "review_date ของไฟล์ data/foods.csv และ data/meal_timing_rules.csv แล้วกด “โหลดไฟล์ข้อมูลใหม่”")
+    shown = review.assign(ตรวจแล้ว=review["ตรวจแล้ว"].map({True: "✅ ตรวจแล้ว", False: "⏳ รอตรวจ"}))
+    st.dataframe(shown, hide_index=True)
+    st.download_button("⬇️ หลักฐานการตรวจรับรอง (CSV สำหรับภาคผนวก)",
+                       shown.to_csv(index=False).encode("utf-8-sig"),
+                       file_name="teacher_review_evidence.csv", mime="text/csv")
 
 with tab_data:
     st.write(f"อาหารที่ใช้ได้: **{len(data.foods)}** รายการ" + (" (DEMO)" if data.is_demo else ""))

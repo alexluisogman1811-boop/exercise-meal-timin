@@ -107,6 +107,21 @@ It prints any value that differs and exits with an error. `easy_digest` and `tag
 classification, not USDA data. Thai-specific dishes are not in USDA: use the Thai Food Composition
 Table (INMU, Mahidol University) for those and put its reference in `source`.
 
+### Spot-check against INMUCAL (proposal 6.8)
+```bash
+python tools/inmucal_check.py sample --n 5
+python tools/inmucal_check.py compare
+```
+`sample` picks foods at random (fixed seed, so the pick can be repeated) and writes `data/inmucal_check.csv`.
+Look each food up in INMUCAL, type its values per 100 g, who checked and the date, then run `compare`.
+It prints each difference and writes `data/inmucal_check_report.csv` for the appendix (match = within 10 %, `config.INMUCAL_TOLERANCE`).
+
+### Teacher review evidence (proposal 6.8)
+`data/foods.csv` and `data/meal_timing_rules.csv` have `reviewer` and `review_date` columns.
+The teacher writes their name and the date (YYYY-MM-DD) on each row they have checked.
+**ผู้ดูแลระบบ → การตรวจรับรอง** shows how many items are reviewed and exports the evidence as CSV.
+Rules without a `reference` are not added to `data/meal_timing_rules.csv` at all.
+
 After editing, open **ผู้ดูแลระบบ → โหลดไฟล์ข้อมูลใหม่**, or restart the app. Run `python -m pytest` to check the files.
 
 ---

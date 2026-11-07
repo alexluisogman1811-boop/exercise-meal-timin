@@ -72,8 +72,12 @@ def test_all_shipped_rule_conditions_parse(path):
         if rule["reference"]:
             assert rule["enforced"], rule["rule_id"]
             assert rule["parsed"]
-    # R07 has no reference -> listed as ignored, not enforced
-    assert [r["rule_id"] for r in ignored] == ["R07"]
+    if path == config.RULES_CSV:
+        # Proposal 6.8: a rule without a reference is not put in the app at all.
+        assert ignored == [] and all(r["reference"] for r in rules)
+    else:
+        # The DEMO copy keeps R07 (no reference) to prove such rules are ignored.
+        assert [r["rule_id"] for r in ignored] == ["R07"]
 
 
 def test_parse_condition_structure():
@@ -148,3 +152,29 @@ def test_save_feedback_roundtrip(tmp_path):
     assert [row[f"sus_q{i}"] for i in range(1, 11)] == answers
     assert row["sus_score"] == 75.0 and "overall" in row["satisfaction"] and row["comment"] == "ดีมาก"
     assert db.user_progress("u2", "2026-11-07", path)["feedback"]
+
+
+def test_review_status_counts_only_dated_reviews():
+    from core.data_loader import review_status
+    ds = load_dataset(config.DATA_DIR)
+    status = review_status(ds)
+    assert len(status) == len(ds.foods) + len(ds.rules)
+    assert not status["ตรวจแล้ว"].any()          # nothing reviewed yet in the shipped files
+    ds.foods.loc[0, ["reviewer", "review_date"]] = ["ครูสมศรี", "2026-11-10"]
+    assert review_status(ds)["ตรวจแล้ว"].sum() == 1
+
+
+def test_inmucal_sample_and_compare():
+    import sys
+    sys.path.insert(0, str(config.BASE_DIR / "tools"))
+    import inmucal_check as ic
+    ids = [f"F{i:02d}" for i in range(1, 11)]
+    assert ic.sample_foods(ids, 3, 2026) == ic.sample_foods(ids, 3, 2026)   # reproducible
+    foods = pd.DataFrame({"food_id": ["F01"], "name_th": ["ข้าว"], "kcal_100g": [130.0],
+                          "protein_100g": [2.69], "carb_100g": [28.17], "fat_100g": [0.28]})
+    check = pd.DataFrame([{"food_id": "F01", "inmucal_kcal_100g": "125", "inmucal_protein_100g": "3.5",
+                           "inmucal_carb_100g": "", "inmucal_fat_100g": "0.28"}])
+    report = ic.compare(foods, check).set_index("nutrient")
+    assert report.loc["kcal_100g", "match"]                 # 4 % apart
+    assert not report.loc["protein_100g", "match"]          # 23 % apart
+    assert "carb_100g" not in report.index                  # blank = not checked yet

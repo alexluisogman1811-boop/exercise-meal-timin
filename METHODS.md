@@ -52,6 +52,7 @@ If protein + fat would leave negative carbohydrate (very low target), fat is red
 - Serving sizes use USDA's own portion weights (e.g. 1 large egg = 50 g, 1 medium banana = 118 g).
 - Nutrients: energy (1008), protein (1003), carbohydrate by difference (1005), total fat (1004), fibre (1079), total sugars (2000), sodium (1093).
 - `tools/verify_usda.py` compares all 70 values with USDA and must report 0 mismatches.
+- Spot-check against INMUCAL (Institute of Nutrition, Mahidol University): `tools/inmucal_check.py` picks foods at random with a fixed seed (2026), the researcher types the INMUCAL values per 100 g, and the script reports the % difference for energy, protein, carbohydrate and fat. A value "matches" when it is within 10 % (assumption: USDA and Thai tables differ in varieties and recipes).
 - Not USDA: `easy_digest` and `tags` (project classification). Thai dishes absent from USDA (e.g. Thai milk tea, kluai nam wa banana) were replaced by the closest real USDA item and named as such, not estimated.
 
 ## 6. Food levels (per 100 g; drinks per 100 mL)
@@ -81,6 +82,8 @@ If the pre_3h window falls before 05:00 the app explains an alternative (previou
 **Daily split (assumption, sums to 100 %):** other_meal 25, pre_3h 25, pre_1h 10, during 5, post_2h 25, bedtime 10. With sessions ≤ 60 min the "during" share is spread proportionally over the other slots.
 
 ## 9. Avoid rules
+- Every rule in the app's rule file has a published reference; a rule without one is not included (proposal 6.8). The loader also ignores any rule whose reference is empty, as a safety net.
+- The teacher checks the rule table and the food list and records `reviewer` + `review_date` on each row; the admin page exports this as evidence for the appendix.
 - Each rule in `meal_timing_rules.csv` keeps the original Thai condition for display and a machine-readable `condition_expr` (clauses `field operator value`, joined by AND/OR, AND first).
 - A rule fires when the slot is in its `slots` list and `condition_expr` is true, unless `except_expr` is true.
 - Rules with no `reference`, an unreadable condition, or unknown slots are **not enforced** and listed in the admin page.
