@@ -49,6 +49,7 @@ if sent:
         score = calc.sus_score(answers)
         db.save_feedback(uid, answers, score, satisfaction, comment.strip())
         ui.log_action("feedback", "submit_sus")
-        st.success(f"ขอบคุณที่ช่วยประเมิน! คะแนน SUS ของคุณ = {score:.1f} / 100")
-        st.caption("คะแนนเฉลี่ยทั่วไปของ SUS อยู่ที่ประมาณ 68 (Sauro 2011)")
+        ui.flash(("success", f"ขอบคุณที่ช่วยประเมิน! คะแนน SUS ของคุณ = {score:.1f} / 100"),
+                 ("caption", "คะแนนเฉลี่ยทั่วไปของ SUS อยู่ที่ประมาณ 68 (Sauro 2011)"))
+ui.show_flash()
 ui.footer()

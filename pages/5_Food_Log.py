@@ -40,9 +40,10 @@ with st.form("add_log", clear_on_submit=True):
         now = datetime.now().strftime("%H:%M:%S")
         db.add_food_log(uid, food_id, qty, f"{day_text}T{now}", slot, calc.per_serving(food, qty))
         ui.log_action("log", "add_log")
-        st.success(f"บันทึก {food['name_th']} แล้ว")
-        for w in rules.check_avoid(food, slot, user, data.rules):
-            st.warning(f"⚠ [{w['rule_id']}] {w['reason']}")
+        ui.flash(("success", f"บันทึก {food['name_th']} แล้ว"),
+                 *[("warning", f"⚠ [{w['rule_id']}] {w['reason']}")
+                   for w in rules.check_avoid(food, slot, user, data.rules)])
+ui.show_flash()
 
 logs = db.get_food_logs(uid, day_text)
 needs = ui.needs_for(user)

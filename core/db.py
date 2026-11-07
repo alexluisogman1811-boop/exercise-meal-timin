@@ -259,7 +259,7 @@ def save_feedback(user_id: str, answers: list[int], score: float, satisfaction: 
                   comment: str, db_path: Path | str = config.DB_PATH) -> None:
     """Store one SUS + satisfaction response."""
     cols = ", ".join(f"sus_q{i}" for i in range(1, 11))
-    marks = ", ".join("?" for _ in range(14))
+    marks = ", ".join("?" for _ in range(15))  # user_id + 10 answers + 4 fields
     with connect(db_path) as conn:
         conn.execute(
             f"INSERT INTO feedback (user_id, {cols}, sus_score, satisfaction, comment, created_at) "

@@ -102,10 +102,10 @@ if submitted:
                        target_carb=needs["carb_g"], target_fat=needs["fat_g"])
         db.save_profile(uid, profile)
         ui.log_action("profile", "calc")
-        st.success(f"บันทึกแล้ว พลังงานเป้าหมายของคุณคือ {needs['target_kcal']:,.0f} กิโลแคลอรี/วัน")
-        for note in needs["notes"]:
-            st.info(note)
-        ui.link("needs", "ดูสรุปความต้องการพลังงาน", "⚡")
-        ui.link("plan", "ดูแผนมื้ออาหารตามเวลา", "🕒")
+        ui.flash(("success", f"บันทึกแล้ว พลังงานเป้าหมายของคุณคือ {needs['target_kcal']:,.0f} กิโลแคลอรี/วัน"),
+                 *[("info", note) for note in needs["notes"]])
 
+if ui.show_flash():
+    ui.link("needs", "ดูสรุปความต้องการพลังงาน", "⚡")
+    ui.link("plan", "ดูแผนมื้ออาหารตามเวลา", "🕯️")
 ui.footer()

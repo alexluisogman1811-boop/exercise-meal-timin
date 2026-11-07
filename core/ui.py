@@ -184,6 +184,24 @@ def needs_for(user: dict) -> dict:
     return calc.compute_needs(user)
 
 
+def flash(*messages: tuple[str, str]) -> None:
+    """Keep (kind, text) messages and rerun at once.
+
+    The sidebar checklist is drawn before the page saves anything, so a rerun
+    is needed for its tick to appear straight after a save.
+    """
+    st.session_state["_flash"] = list(messages)
+    st.rerun()
+
+
+def show_flash() -> bool:
+    """Show messages kept by flash() (kind: success/info/warning/caption)."""
+    messages = st.session_state.pop("_flash", None) or []
+    for kind, text in messages:
+        getattr(st, kind)(text)
+    return bool(messages)
+
+
 def chip(text: str, kind: str = "avoid") -> str:
     """HTML for a small labelled chip (kind: avoid / ok)."""
     return f'<span class="chip chip-{kind}">{html.escape(text)}</span>'

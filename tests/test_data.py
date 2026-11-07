@@ -136,3 +136,15 @@ def test_theme_css_both_modes():
         css = theme.css(dark)
         assert css.startswith("<style>") and "--gold" in css and "{{" not in css
     assert theme.PALETTES["light"].keys() == theme.PALETTES["dark"].keys()
+
+
+def test_save_feedback_roundtrip(tmp_path):
+    path = tmp_path / "f.db"
+    db.init_db(path)
+    db.create_user("u2", False, path)
+    answers = [4, 2, 4, 2, 4, 2, 4, 2, 4, 2]
+    db.save_feedback("u2", answers, calc.sus_score(answers), {"overall": 5}, "ดีมาก", path)
+    row = db.export_table("feedback", path).iloc[0]
+    assert [row[f"sus_q{i}"] for i in range(1, 11)] == answers
+    assert row["sus_score"] == 75.0 and "overall" in row["satisfaction"] and row["comment"] == "ดีมาก"
+    assert db.user_progress("u2", "2026-11-07", path)["feedback"]
