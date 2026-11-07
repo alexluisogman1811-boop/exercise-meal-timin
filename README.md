@@ -25,7 +25,7 @@ High-school research project. UI in Thai, code in English.
 4. รันแอป: `streamlit run app.py` แล้วเปิด http://localhost:8501
 5. รันการทดสอบ: `python -m pytest`
 
-ถ้ายังไม่มีข้อมูลอาหารจริงใน `data/foods.csv` แอปจะใช้ **ข้อมูลตัวอย่าง (DEMO) 10 รายการ** และขึ้นป้าย "ข้อมูลตัวอย่าง ไม่ใช่ค่าจริง"
+ตอนนี้ `data/foods.csv` มีอาหาร 10 รายการที่คัดลอกค่าตรงทุกตัวจาก USDA FoodData Central (ตรวจด้วย `tools/verify_usda.py`) ถ้าไฟล์ว่าง แอปจะใช้ **ข้อมูลตัวอย่าง (DEMO) 10 รายการ** และขึ้นป้าย "ข้อมูลตัวอย่าง ไม่ใช่ค่าจริง"
 
 ## Quick start (English)
 
@@ -95,6 +95,17 @@ Open in Excel or Google Sheets and save as **CSV UTF-8**.
 - `except_expr`: optional; when true the rule does **not** fire (e.g. `slot == during AND tags contains เกลือแร่`)
 - `severity`: `high`, `medium` or `low`
 - `reference` empty → rule ignored (not enforced) and listed in the admin page
+
+### Checking values against USDA (exact match)
+The current `data/foods.csv` holds 10 foods copied **exactly** from USDA FoodData Central
+(SR Legacy, April 2018). The `fdc_id` column links each row to its USDA record. To re-check every number:
+```bash
+python tools/verify_usda.py --sr-dir path/to/FoodData_Central_sr_legacy_food_csv_2018-04
+```
+(download "SR Legacy" CSV from https://fdc.nal.usda.gov/download-datasets) or `python tools/verify_usda.py --api`.
+It prints any value that differs and exits with an error. `easy_digest` and `tags` are the project's own
+classification, not USDA data. Thai-specific dishes are not in USDA: use the Thai Food Composition
+Table (INMU, Mahidol University) for those and put its reference in `source`.
 
 After editing, open **ผู้ดูแลระบบ → โหลดไฟล์ข้อมูลใหม่**, or restart the app. Run `python -m pytest` to check the files.
 

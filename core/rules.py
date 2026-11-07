@@ -239,7 +239,7 @@ def _score_food(food: Mapping, slot: str, profile: Mapping, slot_kcal: float) ->
         score += 0.1
         reasons.append("มีโปรตีนช่วยให้อิ่มนานและเสริมกล้ามเนื้อ")
     # General penalties so less healthy choices sink even where no rule bans them.
-    if food.get("fat_level") == "high":
+    if food.get("fat_level") == "high" or "ทอด" in str(food.get("cooking", "")):
         score -= 0.2
     if food.get("sugar_level") == "high" and slot != "during":
         score -= 0.2

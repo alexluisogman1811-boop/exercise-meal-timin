@@ -47,6 +47,13 @@ If protein + fat would leave negative carbohydrate (very low target), fat is red
 - nutrient for a log = per serving × quantity
 - Food logs store a snapshot of kcal/protein/carb/fat at logging time, so later edits to `foods.csv` do not change history.
 
+## 5b. Food composition data
+- `data/foods.csv` values per 100 g are copied exactly from **USDA FoodData Central, SR Legacy (April 2018)**; each row's `fdc_id` names the record (e.g. 168878 = Rice, white, long-grain, regular, enriched, cooked).
+- Serving sizes use USDA's own portion weights (e.g. 1 large egg = 50 g, 1 medium banana = 118 g).
+- Nutrients: energy (1008), protein (1003), carbohydrate by difference (1005), total fat (1004), fibre (1079), total sugars (2000), sodium (1093).
+- `tools/verify_usda.py` compares all 70 values with USDA and must report 0 mismatches.
+- Not USDA: `easy_digest` and `tags` (project classification). Thai dishes absent from USDA (e.g. Thai milk tea, kluai nam wa banana) were replaced by the closest real USDA item and named as such, not estimated.
+
 ## 6. Food levels (per 100 g; drinks per 100 mL)
 | Level | Solids | Drinks | Source |
 |---|---|---|---|
@@ -120,6 +127,7 @@ Every recommendation shows its reasons, the nutrient data source, the rules chec
 - Drake C, et al. Caffeine effects on sleep taken 0, 3, or 6 hours before going to bed. *J Clin Sleep Med*. 2013;9(11):1195-1200.
 - Sauro J. *A Practical Guide to the System Usability Scale*. 2011.
 - Snijders T, et al. Protein ingestion before sleep increases muscle mass and strength gains during prolonged resistance-type exercise training in healthy young men. *J Nutr*. 2015;145(6):1178-1184.
+- U.S. Department of Agriculture, Agricultural Research Service. FoodData Central: SR Legacy. April 2018. https://fdc.nal.usda.gov
 - Thomas DT, Erdman KA, Burke LM. ACSM/AND/DC Joint Position Statement: Nutrition and Athletic Performance. *Med Sci Sports Exerc*. 2016;48(3):543-568.
 - UK Department of Health / Food Standards Agency. *Guide to creating a front of pack nutrition label for pre-packed products*. 2016.
 - Regulation (EC) No 1924/2006 on nutrition and health claims made on foods.
